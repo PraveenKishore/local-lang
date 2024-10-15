@@ -1,9 +1,11 @@
 package com.prosoft;
 
+import com.prosoft.slang.EnglishSlang;
 import com.prosoft.slang.HindiSlang;
 import com.prosoft.slang.Slang;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -12,19 +14,54 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Local {
-  private static final Slang slang = new HindiSlang();
-  private static final Interpreter interpreter = new Interpreter(slang);
+  private static Interpreter interpreter;
   static boolean hadError = false;
   static boolean hadRuntimeError = false;
 
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
-      System.out.println(slang.usageMessage());
+      System.out.println("Usage: local [-hi/-en] <file path>");
       System.exit(64);
-    } else if (args.length == 1) {
-      runFile(args[0]);
+    }
+
+    Slang slang = null;
+    boolean runPrompt = true;
+
+    if (args.length == 1) {
+      String arg = args[0].toLowerCase();
+      if (arg.equals("-hi")) {
+        slang = new HindiSlang();
+      } else if (arg.equals("-en")) {
+        slang = new EnglishSlang();
+      } else {
+        // Check if it's a file
+        File file = new File(arg);
+        if (!file.isFile() || !file.exists()) {
+          System.out.println("Invalid switch or file path");
+          System.exit(64);
+        }
+
+        String fileName = file.getName();
+        if (fileName.endsWith(".hl")) {
+          slang = new HindiSlang();
+        } else if (fileName.endsWith(".el")) {
+          slang = new EnglishSlang();
+        } else {
+          System.out.println("Invalid file extension");
+          System.exit(64);
+        }
+        runPrompt = false; // Do not run prompt if file is provided
+      }
     } else {
+      slang = new HindiSlang(); // Default to Hindi slang
+    }
+
+    interpreter = new Interpreter(slang);
+    if (runPrompt) {
+      System.out.println("Welcome: local-lang running REPL in " + (slang instanceof HindiSlang ? "Hindi" : "English") + " slang");
       runPrompt();
+    } else {
+      runFile(args[0]);
     }
   }
 
@@ -55,9 +92,9 @@ public class Local {
   }
 
   private static void run(String source) {
-    Scanner scanner = new Scanner(slang, source);
+    Scanner scanner = new Scanner(interpreter.slang, source);
     List<Token> tokens = scanner.scanTokens();
-    Parser parser = new Parser(slang, tokens);
+    Parser parser = new Parser(interpreter.slang, tokens);
     List<Stmt> statements = parser.parse();
     // Stop if there was a syntax error.
     if (hadError) {
@@ -98,7 +135,7 @@ public class Local {
 //  }
 
   static void error(int line, String message) {
-    report(slang.errorInLineMessage(line, message));
+    report(interpreter.slang.errorInLineMessage(line, message));
   }
 
   private static void report(String message) {
@@ -108,14 +145,14 @@ public class Local {
 
   static void error(Token token, String message) {
     if (token.type == TokenType.EOF) {
-      report(slang.errorAtEndMessage(token.line, message));
+      report(interpreter.slang.errorAtEndMessage(token.line, message));
     } else {
-      report(slang.errorAtMessage(token.line, token.lexeme, message));
+      report(interpreter.slang.errorAtMessage(token.line, token.lexeme, message));
     }
   }
 
   static void runtimeError(RuntimeError error) {
-    System.err.println(error.getMessage() + "\n" + slang.runtimeErrorMessage(error.token.line));
+    System.err.println(error.getMessage() + "\n" + interpreter.slang.runtimeErrorMessage(error.token.line));
     hadRuntimeError = true;
   }
 }
