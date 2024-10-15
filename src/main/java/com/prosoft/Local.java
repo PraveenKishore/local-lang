@@ -1,5 +1,8 @@
 package com.prosoft;
 
+import com.prosoft.slang.HindiSlang;
+import com.prosoft.slang.Slang;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,10 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.prosoft.Slang.*;
-
 public class Local {
-  private static final Slang slang = new EnglishSlang();
+  private static final Slang slang = new HindiSlang();
   private static final Interpreter interpreter = new Interpreter(slang);
   static boolean hadError = false;
   static boolean hadRuntimeError = false;

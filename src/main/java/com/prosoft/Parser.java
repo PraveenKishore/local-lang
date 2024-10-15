@@ -1,10 +1,11 @@
 package com.prosoft;
 
+import com.prosoft.slang.Slang;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.prosoft.Slang.*;
 import static com.prosoft.TokenType.*;
 
 public class Parser {

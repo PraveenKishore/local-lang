@@ -1,8 +1,8 @@
 package com.prosoft;
 
-import java.util.List;
+import com.prosoft.slang.Slang;
 
-import static com.prosoft.Slang.*;
+import java.util.List;
 
 class LocalFunction implements LocalCallable {
   private final Slang slang;

@@ -14,8 +14,7 @@ import com.prosoft.Expr.Variable;
 import com.prosoft.Stmt.Expression;
 import com.prosoft.Stmt.Print;
 import com.prosoft.Stmt.Var;
-
-import static com.prosoft.Slang.*;
+import com.prosoft.slang.Slang;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 

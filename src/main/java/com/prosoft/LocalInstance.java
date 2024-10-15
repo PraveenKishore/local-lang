@@ -1,9 +1,9 @@
 package com.prosoft;
 
+import com.prosoft.slang.Slang;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.prosoft.Slang.*;
 
 class LocalInstance {
   private final Slang slang;

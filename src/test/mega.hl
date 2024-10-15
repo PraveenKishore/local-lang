@@ -1,0 +1,56 @@
+// Variables and printing
+maanle name = "Local (Hindi)";
+bolo name;  // Output: Local (Hindi)
+
+// Functions
+fun helloBol() {
+    bolo "Namaste!";
+}
+helloBol();  // Output: Namaste!
+
+maanle a = 5;
+maanle b = 3;
+// Control flow
+agar (a > b) {
+    bolo "'a' bada hai!";
+} varna {
+    bolo "'b' bada hai!";
+}
+
+// Classes and inheritance
+varg Janwar {
+    bol() {
+        bolo "Random awaz";
+    }
+}
+
+varg Kutta < Janwar {
+    bol() {
+        bolo "Bow!";
+    }
+}
+
+maanle meraJanwar = Janwar();
+meraJanwar.bol(); // Output: Generic janwar aawaz
+
+maanle meraKutta = Kutta();
+meraKutta.bol();  // Output: Bow!
+
+// While loop example
+maanle i = 0;
+jabtak (i < 5) {
+    bolo i;  // Output: 0, 1, 2, 3, 4
+    i = i + 1;
+}
+
+// For loop example
+karteraho (maanle j = 0; j < 5; j = j + 1) {
+    bolo j;  // Output: 0, 1, 2, 3, 4
+}
+
+// For loop without initialization and increment (like a C-style while loop)
+maanle k = 0;
+karteraho (; k < 5;) {
+    bolo k;  // Output: 0, 1, 2, 3, 4
+    k = k + 1;
+}

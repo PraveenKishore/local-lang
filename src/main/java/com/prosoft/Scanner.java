@@ -1,6 +1,7 @@
 package com.prosoft;
 
-import static com.prosoft.Slang.*;
+import com.prosoft.slang.Slang;
+
 import static com.prosoft.TokenType.*;
 
 import java.util.ArrayList;

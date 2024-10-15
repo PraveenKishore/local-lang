@@ -1,5 +1,7 @@
 package com.prosoft;
 
+import com.prosoft.slang.Slang;
+
 import java.util.HashMap;
 import java.util.Map;
 

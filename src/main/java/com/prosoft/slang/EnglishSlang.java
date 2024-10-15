@@ -1,4 +1,4 @@
-package com.prosoft;
+package com.prosoft.slang;
 
 public class EnglishSlang extends Slang {
   @Override public String andKey() { return "and"; }

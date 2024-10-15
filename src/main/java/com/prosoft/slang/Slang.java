@@ -1,4 +1,4 @@
-package com.prosoft;
+package com.prosoft.slang;
 
 public abstract class Slang {
   // Abstract methods for keys
