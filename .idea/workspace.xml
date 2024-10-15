@@ -5,9 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="642ccbb1-f221-4736-b90b-fdda4c0b475a" name="Changes" comment="Extract messages to a different file">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/EnglishSlang.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/AstPrinter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Environment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Resolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Resolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Scanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Slang.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Slang.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729000720196</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Extract messages to a different file">
+      <option name="closed" value="true" />
+      <created>1729002503430</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1729002503430</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

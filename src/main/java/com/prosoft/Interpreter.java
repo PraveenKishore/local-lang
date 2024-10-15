@@ -19,12 +19,17 @@ import static com.prosoft.Slang.*;
 
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
-  final Environment globals = new Environment();
-  private Environment environment = globals;
+  public final Slang slang;
+  final Environment globals;
+  private Environment environment;
   private final Map<Expr, Integer> locals = new HashMap<>();
 
-  Interpreter() {
-    globals.define(clockKey(), new LocalCallable() {
+  Interpreter(Slang slang) {
+    this.slang = slang;
+    globals = new Environment(slang);
+    this.environment = globals;
+
+    globals.define(slang.clockKey(), new LocalCallable() {
       @Override
       public int arity() {
         return 0;
@@ -37,7 +42,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
       @Override
       public String toString() {
-        return nativeFnMessage();
+        return slang.nativeFnMessage();
       }
     });
   }
@@ -83,7 +88,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (left instanceof String && right instanceof String) {
           return (String) left + (String) right;
         }
-        throw new RuntimeError(expr.operator, mustBeNumOrStrMessage());
+        throw new RuntimeError(expr.operator, slang.mustBeNumOrStrMessage());
       case SLASH:
         checkNumberOperands(expr.operator, left, right);
         return (double) left / (double) right;
@@ -126,14 +131,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
       return;
     }
 
-    throw new RuntimeError(operator, mustBeANumberMessage());
+    throw new RuntimeError(operator, slang.mustBeANumberMessage());
   }
 
   private void checkNumberOperands(Token operator, Object left, Object right) {
     if (left instanceof Double && right instanceof Double) {
       return;
     }
-    throw new RuntimeError(operator, mustBeNumbersMessage());
+    throw new RuntimeError(operator, slang.mustBeNumbersMessage());
   }
 
   private Object evaluate(Expr expr) {
@@ -182,7 +187,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   private String stringify(Object object) {
     if (object == null) {
-      return nilKey();
+      return slang.nilKey();
     }
     if (object instanceof Double) {
       String text = object.toString();
@@ -257,22 +262,22 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     if (stmt.superclass != null) {
       superclass = evaluate(stmt.superclass);
       if (!(superclass instanceof LocalClass)) {
-        throw new RuntimeError(stmt.superclass.name, superMustBeClassMessage());
+        throw new RuntimeError(stmt.superclass.name, slang.superMustBeClassMessage());
       }
     }
     environment.define(stmt.name.lexeme, null);
 
     if (stmt.superclass != null) {
       environment = new Environment(environment);
-      environment.define(superKey(), superclass);
+      environment.define(slang.superKey(), superclass);
     }
 
     Map<String, LocalFunction> methods = new HashMap<>();
     for (Stmt.Function method : stmt.methods) {
-      LocalFunction function = new LocalFunction(method, environment, method.name.lexeme.equals(initKey()));
+      LocalFunction function = new LocalFunction(slang, method, environment, method.name.lexeme.equals(slang.initKey()));
       methods.put(method.name.lexeme, function);
     }
-    LocalClass klass = new LocalClass(stmt.name.lexeme, (LocalClass) superclass, methods);
+    LocalClass klass = new LocalClass(slang, stmt.name.lexeme, (LocalClass) superclass, methods);
 
     if (superclass != null) {
       environment = environment.enclosing;
@@ -309,7 +314,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   public Object visitSetExpr(Expr.Set expr) {
     Object object = evaluate(expr.object);
     if (!(object instanceof LocalInstance)) {
-      throw new RuntimeError(expr.name, onlyInstancesHaveFieldsMessage());
+      throw new RuntimeError(expr.name, slang.onlyInstancesHaveFieldsMessage());
     }
     Object value = evaluate(expr.value);
     ((LocalInstance) object).set(expr.name, value);
@@ -319,13 +324,13 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   @Override
   public Object visitSuperExpr(Expr.Super expr) {
     int distance = locals.get(expr);
-    LocalClass superclass = (LocalClass) environment.getAt(distance, superKey());
+    LocalClass superclass = (LocalClass) environment.getAt(distance, slang.superKey());
 
-    LocalInstance object = (LocalInstance) environment.getAt(distance - 1, thisKey());
+    LocalInstance object = (LocalInstance) environment.getAt(distance - 1, slang.thisKey());
     LocalFunction method = superclass.findMethod(expr.method.lexeme);
 
     if (method == null) {
-      throw new RuntimeError(expr.method, undefinedPropertyMessage(expr.method.lexeme));
+      throw new RuntimeError(expr.method, slang.undefinedPropertyMessage(expr.method.lexeme));
     }
 
     return method.bind(object);
@@ -352,11 +357,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
       arguments.add(evaluate(argument));
     }
     if (!(callee instanceof LocalCallable)) {
-      throw new RuntimeError(expr.paren, canCallOnlyFunOrClassMessage());
+      throw new RuntimeError(expr.paren, slang.canCallOnlyFunOrClassMessage());
     }
     LocalCallable function = (LocalCallable) callee;
     if (arguments.size() != function.arity()) {
-      throw new RuntimeError(expr.paren, arityMismatchMessage(function.arity(), arguments.size()));
+      throw new RuntimeError(expr.paren, slang.arityMismatchMessage(function.arity(), arguments.size()));
     }
     return function.call(this, arguments);
   }
@@ -367,12 +372,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     if (object instanceof LocalInstance) {
       return ((LocalInstance) object).get(expr.name);
     }
-    throw new RuntimeError(expr.name, onlyInstancesHavePropsMessage());
+    throw new RuntimeError(expr.name, slang.onlyInstancesHavePropsMessage());
   }
 
   @Override
   public Void visitFunctionStmt(Stmt.Function stmt) {
-    LocalFunction function = new LocalFunction(stmt, environment, false);
+    LocalFunction function = new LocalFunction(slang, stmt, environment, false);
     environment.define(stmt.name.lexeme, function);
     return null;
   }

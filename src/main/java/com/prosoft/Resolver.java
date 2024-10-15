@@ -73,7 +73,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
     Map<String, Boolean> scope = scopes.peek();
     if (scope.containsKey(name.lexeme)) {
-      Local.error(name, variableRedeclarationMessage());
+      Local.error(name, interpreter.slang.variableRedeclarationMessage());
     }
     scope.put(name.lexeme, false);
   }
@@ -111,7 +111,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     define(stmt.name);
 
     if (stmt.superclass != null && stmt.name.lexeme.equals(stmt.superclass.name.lexeme)) {
-      Local.error(stmt.superclass.name, classCantInheritItselfMessage());
+      Local.error(stmt.superclass.name, interpreter.slang.classCantInheritItselfMessage());
     }
 
     if (stmt.superclass != null) {
@@ -121,15 +121,15 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     if (stmt.superclass != null) {
       beginScope();
-      scopes.peek().put(superKey(), true);
+      scopes.peek().put(interpreter.slang.superKey(), true);
     }
 
     beginScope();
-    scopes.peek().put(thisKey(), true);
+    scopes.peek().put(interpreter.slang.thisKey(), true);
 
     for (Stmt.Function method : stmt.methods) {
       FunctionType declaration = FunctionType.METHOD;
-      if (method.name.lexeme.equals(initKey())) {
+      if (method.name.lexeme.equals(interpreter.slang.initKey())) {
         declaration = FunctionType.INITIALIZER;
       }
       resolveFunction(method, declaration);
@@ -177,12 +177,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitReturnStmt(Stmt.Return stmt) {
     if (currentFunction == FunctionType.NONE) {
-      Local.error(stmt.keyword, cantReturnFromTopLevelMessage());
+      Local.error(stmt.keyword, interpreter.slang.cantReturnFromTopLevelMessage());
     }
 
     if (stmt.value != null) {
       if (currentFunction == FunctionType.INITIALIZER) {
-        Local.error(stmt.keyword, cantReturnFromInitializerMessage());
+        Local.error(stmt.keyword, interpreter.slang.cantReturnFromInitializerMessage());
       }
       resolve(stmt.value);
     }
@@ -209,7 +209,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitVariableExpr(Expr.Variable expr) {
     if (!scopes.isEmpty() && scopes.peek().get(expr.name.lexeme) == Boolean.FALSE) {
-      Local.error(expr.name, cantReadLocalFromInitializerMessage());
+      Local.error(expr.name, interpreter.slang.cantReadLocalFromInitializerMessage());
     }
     resolveLocal(expr, expr.name);
     return null;
@@ -272,9 +272,9 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitSuperExpr(Expr.Super expr) {
     if (currentClass == ClassType.NONE) {
-      Local.error(expr.keyword, cantUseSuperOutsideClassMessage());
+      Local.error(expr.keyword, interpreter.slang.cantUseSuperOutsideClassMessage());
     } else if (currentClass != ClassType.SUBCLASS) {
-      Local.error(expr.keyword, cantUseSuperWithoutInheritanceMessage());
+      Local.error(expr.keyword, interpreter.slang.cantUseSuperWithoutInheritanceMessage());
     }
 
     resolveLocal(expr, expr.keyword);
@@ -284,7 +284,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitThisExpr(Expr.This expr) {
     if (currentClass == ClassType.NONE) {
-      Local.error(expr.keyword, cantUseThisOutsideClassMessage());
+      Local.error(expr.keyword, interpreter.slang.cantUseThisOutsideClassMessage());
       return null;
     }
 

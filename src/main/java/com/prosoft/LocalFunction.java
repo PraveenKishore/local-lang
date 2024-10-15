@@ -5,11 +5,13 @@ import java.util.List;
 import static com.prosoft.Slang.*;
 
 class LocalFunction implements LocalCallable {
+  private final Slang slang;
   private final Stmt.Function declaration;
   private final Environment closure;
   private final boolean isInitializer;
 
-  LocalFunction(Stmt.Function declaration, Environment closure, boolean isInitializer) {
+  LocalFunction(Slang slang, Stmt.Function declaration, Environment closure, boolean isInitializer) {
+    this.slang = slang;
     this.isInitializer = isInitializer;
     this.closure = closure;
     this.declaration = declaration;
@@ -17,8 +19,8 @@ class LocalFunction implements LocalCallable {
 
   LocalFunction bind(LocalInstance instance) {
     Environment environment = new Environment(closure);
-    environment.define(thisKey(), instance);
-    return new LocalFunction(declaration, environment, isInitializer);
+    environment.define(slang.thisKey(), instance);
+    return new LocalFunction(slang, declaration, environment, isInitializer);
   }
 
   @Override
@@ -38,13 +40,13 @@ class LocalFunction implements LocalCallable {
       return returnValue.value;
     }
     if (isInitializer) {
-      return closure.getAt(0, thisKey());
+      return closure.getAt(0, slang.thisKey());
     }
     return null;
   }
 
   @Override
   public String toString() {
-    return functionStringMessage(declaration.name.lexeme);
+    return slang.functionStringMessage(declaration.name.lexeme);
   }
 }

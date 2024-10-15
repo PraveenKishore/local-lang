@@ -6,10 +6,12 @@ import java.util.Map;
 import static com.prosoft.Slang.*;
 
 class LocalInstance {
+  private final Slang slang;
   private LocalClass klass;
   private final Map<String, Object> fields = new HashMap<>();
 
-  LocalInstance(LocalClass klass) {
+  LocalInstance(Slang slang, LocalClass klass) {
+    this.slang = slang;
     this.klass = klass;
   }
 
@@ -23,7 +25,7 @@ class LocalInstance {
       return method.bind(this);
     }
 
-    throw new RuntimeError(name, undefinedPropertyMessage(name.lexeme));
+    throw new RuntimeError(name, slang.undefinedPropertyMessage(name.lexeme));
   }
 
   void set(Token name, Object value) {
@@ -32,6 +34,6 @@ class LocalInstance {
 
   @Override
   public String toString() {
-    return instanceStringMessage(klass.name);
+    return slang.instanceStringMessage(klass.name);
   }
 }

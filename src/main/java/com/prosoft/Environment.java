@@ -3,17 +3,18 @@ package com.prosoft;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.prosoft.Slang.undefinedVariableMessage;
-
 public class Environment {
+  private final Slang slang;
   final Environment enclosing;
   private final Map<String, Object> values = new HashMap<>();
 
-  Environment() {
+  Environment(Slang slang) {
+    this.slang = slang;
     enclosing = null;
   }
 
   Environment(Environment enclosing) {
+    this.slang = enclosing.slang;
     this.enclosing = enclosing;
   }
 
@@ -21,9 +22,10 @@ public class Environment {
     if (values.containsKey(name.lexeme)) {
       return values.get(name.lexeme);
     }
-    if (enclosing != null)
+    if (enclosing != null) {
       return enclosing.get(name);
-    throw new RuntimeError(name, undefinedVariableMessage(name.lexeme));
+    }
+    throw new RuntimeError(name, slang.undefinedVariableMessage(name.lexeme));
   }
 
   void define(String name, Object value) {
@@ -55,6 +57,6 @@ public class Environment {
       enclosing.assign(name, value);
       return;
     }
-    throw new RuntimeError(name, undefinedVariableMessage(name.lexeme));
+    throw new RuntimeError(name, slang.undefinedVariableMessage(name.lexeme));
   }
 }

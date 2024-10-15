@@ -9,35 +9,35 @@ import java.util.List;
 import java.util.Map;
 
 public class Scanner {
+  private final Slang slang;
   private final String source;
   private final List<Token> tokens = new ArrayList<>();
   private int start = 0;
   private int current = 0;
   private int line = 1;
-  private static final Map<String, TokenType> keywords;
+  private final Map<String, TokenType> keywords;
 
-  static {
-    keywords = new HashMap<>();
-    keywords.put(andKey(), AND);
-    keywords.put(classKey(), CLASS);
-    keywords.put(elseKey(), ELSE);
-    keywords.put(falseKey(), FALSE);
-    keywords.put(forKey(), FOR);
-    keywords.put(functionKey(), FUN);
-    keywords.put(ifKey(), IF);
-    keywords.put(nilKey(), NIL);
-    keywords.put(orKey(), OR);
-    keywords.put(printKey(), PRINT);
-    keywords.put(returnKey(), RETURN);
-    keywords.put(superKey(), SUPER);
-    keywords.put(thisKey(), THIS);
-    keywords.put(trueKey(), TRUE);
-    keywords.put(varKey(), VAR);
-    keywords.put(whileKey(), WHILE);
-  }
-
-  Scanner(String source) {
+  Scanner(Slang slang, String source) {
+    this.slang = slang;
     this.source = source;
+
+    keywords = new HashMap<>();
+    keywords.put(slang.andKey(), AND);
+    keywords.put(slang.classKey(), CLASS);
+    keywords.put(slang.elseKey(), ELSE);
+    keywords.put(slang.falseKey(), FALSE);
+    keywords.put(slang.forKey(), FOR);
+    keywords.put(slang.functionKey(), FUN);
+    keywords.put(slang.ifKey(), IF);
+    keywords.put(slang.nilKey(), NIL);
+    keywords.put(slang.orKey(), OR);
+    keywords.put(slang.printKey(), PRINT);
+    keywords.put(slang.returnKey(), RETURN);
+    keywords.put(slang.superKey(), SUPER);
+    keywords.put(slang.thisKey(), THIS);
+    keywords.put(slang.trueKey(), TRUE);
+    keywords.put(slang.varKey(), VAR);
+    keywords.put(slang.whileKey(), WHILE);
   }
 
   List<Token> scanTokens() {
@@ -175,7 +175,7 @@ public class Scanner {
     }
 
     if (isAtEnd()) {
-      Local.error(line, unterminatedStringMessage());
+      Local.error(line, slang.unterminatedStringMessage());
       return;
     }
 

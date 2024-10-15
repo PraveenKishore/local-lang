@@ -9,12 +9,14 @@ import static com.prosoft.TokenType.*;
 
 public class Parser {
 
+  private final Slang slang;
   private static class ParseError extends RuntimeException { }
 
   private final List<Token> tokens;
   private int current = 0;
 
-  Parser(List<Token> tokens) {
+  Parser(Slang slang, List<Token> tokens) {
+    this.slang = slang;
     this.tokens = tokens;
   }
 
@@ -36,7 +38,7 @@ public class Parser {
         return classDeclaration();
       }
       if (match(FUN)) {
-        return function(functionKindKey());
+        return function(slang.functionKindKey());
       }
       if (match(VAR)) {
         return varDeclaration();
@@ -49,19 +51,19 @@ public class Parser {
   }
 
   private Stmt classDeclaration() {
-    Token name = consume(IDENTIFIER, expectClassNameMessage());
+    Token name = consume(IDENTIFIER, slang.expectClassNameMessage());
     Expr.Variable superclass = null;
     if (match(LESS)) {
-      consume(IDENTIFIER, expectSuperClassNameMessage());
+      consume(IDENTIFIER, slang.expectSuperClassNameMessage());
       superclass = new Expr.Variable(previous());
     }
 
-    consume(LEFT_BRACE, expectLeftBraceBeforeClassBodyMessage());
+    consume(LEFT_BRACE, slang.expectLeftBraceBeforeClassBodyMessage());
     List<Stmt.Function> methods = new ArrayList<>();
     while (!check(RIGHT_BRACE) && !isAtEnd()) {
-      methods.add(function(Slang.methodKindKey()));
+      methods.add(function(slang.methodKindKey()));
     }
-    consume(RIGHT_BRACE, expectRightBraceAfterClassBodyMessage());
+    consume(RIGHT_BRACE, slang.expectRightBraceAfterClassBodyMessage());
     return new Stmt.Class(name, superclass, methods);
   }
 
@@ -88,7 +90,7 @@ public class Parser {
   }
 
   private Stmt forStatement() {
-    consume(LEFT_PAREN, expectLeftParenAfterForMessage());
+    consume(LEFT_PAREN, slang.expectLeftParenAfterForMessage());
 
     Stmt initializer;
     if (match(SEMICOLON)) {
@@ -102,13 +104,13 @@ public class Parser {
     if (!check(SEMICOLON)) {
       condition = expression();
     }
-    consume(SEMICOLON, expectSemicolonAfterLoopConditionMessage());
+    consume(SEMICOLON, slang.expectSemicolonAfterLoopConditionMessage());
 
     Expr increment = null;
     if (!check(RIGHT_PAREN)) {
       increment = expression();
     }
-    consume(RIGHT_PAREN, expectRightParenAfterForClausesMessage());
+    consume(RIGHT_PAREN, slang.expectRightParenAfterForClausesMessage());
     Stmt body = statement();
     if (increment != null) {
       body = new Stmt.Block(Arrays.asList(body, new Stmt.Expression(increment)));
@@ -127,9 +129,9 @@ public class Parser {
   }
 
   private Stmt ifStatement() {
-    consume(LEFT_PAREN, expectLeftParenAfterIfMessage());
+    consume(LEFT_PAREN, slang.expectLeftParenAfterIfMessage());
     Expr condition = expression();
-    consume(RIGHT_PAREN, expectRightParenAfterIfConditionMessage());
+    consume(RIGHT_PAREN, slang.expectRightParenAfterIfConditionMessage());
     Stmt thenBranch = statement();
     Stmt elseBranch = null;
     if (match(ELSE)) {
@@ -140,7 +142,7 @@ public class Parser {
 
   private Stmt printStatement() {
     Expr value = expression();
-    consume(SEMICOLON, expectSemicolonAfterValueMessage());
+    consume(SEMICOLON, slang.expectSemicolonAfterValueMessage());
     return new Stmt.Print(value);
   }
 
@@ -150,48 +152,48 @@ public class Parser {
     if (!check(SEMICOLON)) {
       value = expression();
     }
-    consume(SEMICOLON, expectSemicolonAfterReturnValueMessage());
+    consume(SEMICOLON, slang.expectSemicolonAfterReturnValueMessage());
     return new Stmt.Return(keyword, value);
   }
 
   private Stmt varDeclaration() {
-    Token name = consume(IDENTIFIER, expectVariableNameMessage());
+    Token name = consume(IDENTIFIER, slang.expectVariableNameMessage());
     Expr initializer = null;
     if (match(EQUAL)) {
       initializer = expression();
     }
-    consume(SEMICOLON, expectSemicolonAfterVariableDeclarationMessage());
+    consume(SEMICOLON, slang.expectSemicolonAfterVariableDeclarationMessage());
     return new Stmt.Var(name, initializer);
   }
 
   private Stmt whileStatement() {
-    consume(LEFT_PAREN, expectLeftParenAfterWhileMessage());
+    consume(LEFT_PAREN, slang.expectLeftParenAfterWhileMessage());
     Expr condition = expression();
-    consume(RIGHT_PAREN, expectRightParenAfterConditionMessage());
+    consume(RIGHT_PAREN, slang.expectRightParenAfterConditionMessage());
     Stmt body = statement();
     return new Stmt.While(condition, body);
   }
 
   private Stmt expressionStatement() {
     Expr expr = expression();
-    consume(SEMICOLON, expectSemicolonAfterExpressionMessage());
+    consume(SEMICOLON, slang.expectSemicolonAfterExpressionMessage());
     return new Stmt.Expression(expr);
   }
 
   private Stmt.Function function(String kind) {
-    Token name = consume(IDENTIFIER, expectFunctionNameMessage(kind));
-    consume(LEFT_PAREN, expectLeftParenAfterFunctionNameMessage(kind));
+    Token name = consume(IDENTIFIER, slang.expectFunctionNameMessage(kind));
+    consume(LEFT_PAREN, slang.expectLeftParenAfterFunctionNameMessage(kind));
     List<Token> parameters = new ArrayList<>();
     if (!check(RIGHT_PAREN)) {
       do {
         if (parameters.size() >= 255) {
-          error(peek(), cantHaveMoreThan255ParametersMessage());
+          error(peek(), slang.cantHaveMoreThan255ParametersMessage());
         }
-        parameters.add(consume(IDENTIFIER, expectParamNameMessage()));
+        parameters.add(consume(IDENTIFIER, slang.expectParamNameMessage()));
       } while (match(COMMA));
     }
-    consume(RIGHT_PAREN, expectRightParenAfterParametersMessage());
-    consume(LEFT_BRACE, expectLeftBraceBeforeFunctionBodyMessage(kind));
+    consume(RIGHT_PAREN, slang.expectRightParenAfterParametersMessage());
+    consume(LEFT_BRACE, slang.expectLeftBraceBeforeFunctionBodyMessage(kind));
     List<Stmt> body = block();
     return new Stmt.Function(name, parameters, body);
   }
@@ -201,7 +203,7 @@ public class Parser {
     while (!check(RIGHT_BRACE) && !isAtEnd()) {
       statements.add(declaration());
     }
-    consume(RIGHT_BRACE, expectRightBraceAfterBlock());
+    consume(RIGHT_BRACE, slang.expectRightBraceAfterBlock());
     return statements;
   }
 
@@ -217,7 +219,7 @@ public class Parser {
         Expr.Get get = (Expr.Get) expr;
         return new Expr.Set(get.object, get.name, value);
       }
-      error(equals, invalidAssignmentTargetMessage());
+      error(equals, slang.invalidAssignmentTargetMessage());
     }
     return expr;
   }
@@ -296,12 +298,12 @@ public class Parser {
     if (!check(RIGHT_PAREN)) {
       do {
         if (arguments.size() >= 255) {
-          error(peek(), cantHaveMoreThan255ArgumentsMessage());
+          error(peek(), slang.cantHaveMoreThan255ArgumentsMessage());
         }
         arguments.add(expression());
       } while (match(COMMA));
     }
-    Token paren = consume(RIGHT_PAREN, expectRightParenAfterArgumentsMessage());
+    Token paren = consume(RIGHT_PAREN, slang.expectRightParenAfterArgumentsMessage());
     return new Expr.Call(callee, paren, arguments);
   }
 
@@ -311,7 +313,7 @@ public class Parser {
       if (match(LEFT_PAREN)) {
         expr = finishCall(expr);
       } else if (match(DOT)) {
-        Token name = consume(IDENTIFIER, expectPropertyNameAfterDotMessage());
+        Token name = consume(IDENTIFIER, slang.expectPropertyNameAfterDotMessage());
         expr = new Expr.Get(expr, name);
       } else {
         break;
@@ -335,8 +337,8 @@ public class Parser {
     }
     if (match(SUPER)) {
       Token keyword = previous();
-      consume(DOT, expectSuperDotMessage());
-      Token method = consume(IDENTIFIER, expectSuperclassMethodNameMessage());
+      consume(DOT, slang.expectSuperDotMessage());
+      Token method = consume(IDENTIFIER, slang.expectSuperclassMethodNameMessage());
       return new Expr.Super(keyword, method);
     }
     if (match(THIS)) {
@@ -348,11 +350,11 @@ public class Parser {
 
     if (match(LEFT_PAREN)) {
       Expr expr = expression();
-      consume(RIGHT_PAREN, expectRightParenAfterExpressionMessage());
+      consume(RIGHT_PAREN, slang.expectRightParenAfterExpressionMessage());
       return new Expr.Grouping(expr);
     }
 
-    throw error(peek(), expectExpressionMessage());
+    throw error(peek(), slang.expectExpressionMessage());
   }
 
   private boolean match(TokenType... types) {

@@ -11,13 +11,14 @@ import java.util.List;
 import static com.prosoft.Slang.*;
 
 public class Local {
-  private static final Interpreter interpreter = new Interpreter();
+  private static final Slang slang = new EnglishSlang();
+  private static final Interpreter interpreter = new Interpreter(slang);
   static boolean hadError = false;
   static boolean hadRuntimeError = false;
 
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
-      System.out.println(usageMessage());
+      System.out.println(slang.usageMessage());
       System.exit(64);
     } else if (args.length == 1) {
       runFile(args[0]);
@@ -53,9 +54,9 @@ public class Local {
   }
 
   private static void run(String source) {
-    Scanner scanner = new Scanner(source);
+    Scanner scanner = new Scanner(slang, source);
     List<Token> tokens = scanner.scanTokens();
-    Parser parser = new Parser(tokens);
+    Parser parser = new Parser(slang, tokens);
     List<Stmt> statements = parser.parse();
     // Stop if there was a syntax error.
     if (hadError) {
@@ -96,7 +97,7 @@ public class Local {
 //  }
 
   static void error(int line, String message) {
-    report(errorInLineMessage(line, message));
+    report(slang.errorInLineMessage(line, message));
   }
 
   private static void report(String message) {
@@ -106,14 +107,14 @@ public class Local {
 
   static void error(Token token, String message) {
     if (token.type == TokenType.EOF) {
-      report(errorAtEndMessage(token.line, message));
+      report(slang.errorAtEndMessage(token.line, message));
     } else {
-      report(errorAtMessage(token.line, token.lexeme, message));
+      report(slang.errorAtMessage(token.line, token.lexeme, message));
     }
   }
 
   static void runtimeError(RuntimeError error) {
-    System.err.println(error.getMessage() + "\n" + runtimeErrorMessage(error.token.line));
+    System.err.println(error.getMessage() + "\n" + slang.runtimeErrorMessage(error.token.line));
     hadRuntimeError = true;
   }
 }
