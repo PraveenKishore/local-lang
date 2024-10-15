@@ -19,6 +19,8 @@ public class Slang {
   public static String whileKey() { return "while"; }
   public static String clockKey() { return "clock"; }
   public static String initKey() { return "init"; }
+  public static String functionKindKey() { return "function"; }
+  public static String methodKindKey() { return "method"; }
 
   public static String unterminatedStringMessage() { return "Unterminated string."; }
   public static String undefinedVariableMessage(String name) { return "Undefined variable '" + name + "'."; }
@@ -47,4 +49,35 @@ public class Slang {
   public static String cantUseSuperOutsideClassMessage() { return "Can't use 'super' outside of a class."; }
   public static String cantUseSuperWithoutInheritanceMessage() { return "Can't use 'super' in a class with no superclass."; }
   public static String cantUseThisOutsideClassMessage() { return "Can't use 'this' outside of a class."; }
+  public static String expectClassNameMessage() { return "Expect class name."; }
+  public static String expectSuperClassNameMessage() { return "Expect superclass name."; }
+  public static String expectLeftBraceBeforeClassBodyMessage() { return "Expect '{' before class body."; }
+  public static String expectRightBraceAfterClassBodyMessage() { return "Expect '}' after class body."; }
+  public static String expectLeftParenAfterForMessage() { return "Expect '(' after 'for'."; }
+  public static String expectSemicolonAfterLoopConditionMessage() { return "Expect ';' after loop condition."; }
+  public static String expectRightParenAfterForClausesMessage() { return "Expect ')' after for clauses."; }
+  public static String expectLeftParenAfterIfMessage() { return "Expect '(' after 'if'."; }
+  public static String expectRightParenAfterIfConditionMessage() { return "Expect ')' after if condition."; }
+  public static String expectSemicolonAfterValueMessage() { return "Expect ';' after value."; }
+  public static String expectSemicolonAfterReturnValueMessage() { return "Expect ';' after return value."; }
+  public static String expectVariableNameMessage() { return "Expect variable name."; }
+  public static String expectSemicolonAfterVariableDeclarationMessage() { return "Expect ';' after variable declaration."; }
+  public static String expectLeftParenAfterWhileMessage() { return "Expect '(' after 'while'."; }
+  public static String expectRightParenAfterConditionMessage() { return "Expect ')' after condition."; }
+  public static String expectSemicolonAfterExpressionMessage() { return "Expect ';' after expression."; }
+  public static String expectRightParenAfterArgumentsMessage() { return "Expect ')' after arguments."; }
+  public static String expectPropertyNameAfterDotMessage() { return "Expect property name after '.'."; }
+  public static String expectExpressionMessage() { return "Expect expression."; }
+  public static String cantHaveMoreThan255ParametersMessage() { return "Can't have more than 255 parameters."; }
+  public static String cantHaveMoreThan255ArgumentsMessage() { return "Can't have more than 255 arguments."; }
+  public static String invalidAssignmentTargetMessage() { return "Invalid assignment target."; }
+  public static String expectParamNameMessage() { return "Expect parameter name."; }
+  public static String expectFunctionNameMessage(String kind) { return "Expect " + kind + " name."; }
+  public static String expectLeftParenAfterFunctionNameMessage(String kind) { return "Expect '(' after " + kind + " name."; }
+  public static String expectRightParenAfterParametersMessage() { return "Expect ')' after parameters."; }
+  public static String expectLeftBraceBeforeFunctionBodyMessage(String kind) { return "Expect '{' before " + kind + " body."; }
+  public static String expectSuperDotMessage() { return "Expect '.' after 'super'."; }
+  public static String expectSuperclassMethodNameMessage() { return "Expect superclass method name."; }
+  public static String expectRightParenAfterExpressionMessage() { return "Expect ')' after expression."; }
+  public static String expectRightBraceAfterBlock() { return "Expect '}' after block."; }
 }
