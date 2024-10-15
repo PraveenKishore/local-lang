@@ -123,7 +123,7 @@ public class Scanner {
         } else if (isAlpha(c)) {
           identifier();
         } else {
-          Lox.error(line, source);
+          Local.error(line, source);
         }
         break;
     }
@@ -174,7 +174,7 @@ public class Scanner {
     }
 
     if (isAtEnd()) {
-      Lox.error(line, "Unterminated string.");
+      Local.error(line, "Unterminated string.");
       return;
     }
 

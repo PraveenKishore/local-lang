@@ -3,11 +3,11 @@ package com.prosoft;
 import java.util.HashMap;
 import java.util.Map;
 
-class LoxInstance {
-  private LoxClass klass;
+class LocalInstance {
+  private LocalClass klass;
   private final Map<String, Object> fields = new HashMap<>();
 
-  LoxInstance(LoxClass klass) {
+  LocalInstance(LocalClass klass) {
     this.klass = klass;
   }
 
@@ -16,7 +16,7 @@ class LoxInstance {
       return fields.get(name.lexeme);
     }
 
-    LoxFunction method = klass.findMethod(name.lexeme);
+    LocalFunction method = klass.findMethod(name.lexeme);
     if (method != null) {
       return method.bind(this);
     }

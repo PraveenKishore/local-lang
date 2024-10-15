@@ -2,7 +2,7 @@ package com.prosoft;
 
 import java.util.List;
 
-interface LoxCallable {
+interface LocalCallable {
   int arity();
   Object call(Interpreter interpreter, List<Object> arguments);
 }

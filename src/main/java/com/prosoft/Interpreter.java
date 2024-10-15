@@ -22,7 +22,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   private final Map<Expr, Integer> locals = new HashMap<>();
 
   Interpreter() {
-    globals.define("clock", new LoxCallable() {
+    globals.define("clock", new LocalCallable() {
       @Override
       public int arity() {
         return 0;
@@ -47,7 +47,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         execute(statement);
       }
     } catch (RuntimeError error) {
-      Lox.runtimeError(error);
+      Local.runtimeError(error);
     }
   }
 
@@ -255,7 +255,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     Object superclass = null;
     if (stmt.superclass != null) {
       superclass = evaluate(stmt.superclass);
-      if (!(superclass instanceof LoxClass)) {
+      if (!(superclass instanceof LocalClass)) {
         throw new RuntimeError(stmt.superclass.name, "Superclass must be a class.");
       }
     }
@@ -266,12 +266,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
       environment.define("super", superclass);
     }
 
-    Map<String, LoxFunction> methods = new HashMap<>();
+    Map<String, LocalFunction> methods = new HashMap<>();
     for (Stmt.Function method : stmt.methods) {
-      LoxFunction function = new LoxFunction(method, environment, method.name.lexeme.equals("init"));
+      LocalFunction function = new LocalFunction(method, environment, method.name.lexeme.equals("init"));
       methods.put(method.name.lexeme, function);
     }
-    LoxClass klass = new LoxClass(stmt.name.lexeme, (LoxClass) superclass, methods);
+    LocalClass klass = new LocalClass(stmt.name.lexeme, (LocalClass) superclass, methods);
 
     if (superclass != null) {
       environment = environment.enclosing;
@@ -307,21 +307,21 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   @Override
   public Object visitSetExpr(Expr.Set expr) {
     Object object = evaluate(expr.object);
-    if (!(object instanceof LoxInstance)) {
+    if (!(object instanceof LocalInstance)) {
       throw new RuntimeError(expr.name, "Only instances have fields.");
     }
     Object value = evaluate(expr.value);
-    ((LoxInstance) object).set(expr.name, value);
+    ((LocalInstance) object).set(expr.name, value);
     return value;
   }
 
   @Override
   public Object visitSuperExpr(Expr.Super expr) {
     int distance = locals.get(expr);
-    LoxClass superclass = (LoxClass) environment.getAt(distance, "super");
+    LocalClass superclass = (LocalClass) environment.getAt(distance, "super");
 
-    LoxInstance object = (LoxInstance) environment.getAt(distance - 1, "this");
-    LoxFunction method = superclass.findMethod(expr.method.lexeme);
+    LocalInstance object = (LocalInstance) environment.getAt(distance - 1, "this");
+    LocalFunction method = superclass.findMethod(expr.method.lexeme);
 
     if (method == null) {
       throw new RuntimeError(expr.method, "Undefined property '" + expr.method.lexeme + "'.");
@@ -350,11 +350,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     for (Expr argument : expr.arguments) {
       arguments.add(evaluate(argument));
     }
-    if (!(callee instanceof LoxCallable)) {
+    if (!(callee instanceof LocalCallable)) {
       throw new RuntimeError(expr.paren,
           "Can only call functions and classes.");
     }
-    LoxCallable function = (LoxCallable) callee;
+    LocalCallable function = (LocalCallable) callee;
     if (arguments.size() != function.arity()) {
       throw new RuntimeError(expr.paren, "Expected " +
           function.arity() + " arguments but got " +
@@ -366,8 +366,8 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   @Override
   public Object visitGetExpr(Expr.Get expr) {
     Object object = evaluate(expr.object);
-    if (object instanceof LoxInstance) {
-      return ((LoxInstance) object).get(expr.name);
+    if (object instanceof LocalInstance) {
+      return ((LocalInstance) object).get(expr.name);
     }
     throw new RuntimeError(expr.name,
         "Only instances have properties.");
@@ -375,7 +375,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   @Override
   public Void visitFunctionStmt(Stmt.Function stmt) {
-    LoxFunction function = new LoxFunction(stmt, environment, false);
+    LocalFunction function = new LocalFunction(stmt, environment, false);
     environment.define(stmt.name.lexeme, function);
     return null;
   }

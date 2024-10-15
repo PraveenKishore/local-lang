@@ -2,21 +2,21 @@ package com.prosoft;
 
 import java.util.List;
 
-class LoxFunction implements LoxCallable {
+class LocalFunction implements LocalCallable {
   private final Stmt.Function declaration;
   private final Environment closure;
   private final boolean isInitializer;
 
-  LoxFunction(Stmt.Function declaration, Environment closure, boolean isInitializer) {
+  LocalFunction(Stmt.Function declaration, Environment closure, boolean isInitializer) {
     this.isInitializer = isInitializer;
     this.closure = closure;
     this.declaration = declaration;
   }
 
-  LoxFunction bind(LoxInstance instance) {
+  LocalFunction bind(LocalInstance instance) {
     Environment environment = new Environment(closure);
     environment.define("this", instance);
-    return new LoxFunction(declaration, environment, isInitializer);
+    return new LocalFunction(declaration, environment, isInitializer);
   }
 
   @Override
