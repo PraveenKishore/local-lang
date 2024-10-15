@@ -21,6 +21,7 @@ public class HindiSlang extends Slang {
   @Override public String initKey() { return "shuruwad"; }
   @Override public String functionKindKey() { return "function"; }
   @Override public String methodKindKey() { return "method"; }
+  @Override public String exitREPLKey() { return "bye"; }
 
   @Override public String unterminatedStringMessage() { return "String terminate nahi kiya hai"; }
   @Override public String undefinedVariableMessage(String name) { return "Variable define nahi kiya hai - '" + name + "'."; }
@@ -79,4 +80,5 @@ public class HindiSlang extends Slang {
   @Override public String expectSuperclassMethodNameMessage() { return "Superclass ki method ka naam chahiye."; }
   @Override public String expectRightParenAfterExpressionMessage() { return "Expression ke baad ')' honi chahiye."; }
   @Override public String expectRightBraceAfterBlock() { return "Block ke baad '}' honi chahiye."; }
+  @Override public String exitREPLMessage() { return "Kush raho bhai. Exiting REPL now."; }
 }

@@ -86,6 +86,10 @@ public class Local {
       if (line == null) {
         break;
       }
+      if (line.equalsIgnoreCase(interpreter.slang.exitREPLKey())) {
+        System.out.println(interpreter.slang.exitREPLMessage());
+        System.exit(0);
+      }
       run(line);
       hadError = false; // Reset for every prompt, so we don't kill the session
     }

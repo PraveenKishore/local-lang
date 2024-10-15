@@ -21,6 +21,7 @@ public class EnglishSlang extends Slang {
   @Override public String initKey() { return "init"; }
   @Override public String functionKindKey() { return "function"; }
   @Override public String methodKindKey() { return "method"; }
+  @Override public String exitREPLKey() { return "bye"; }
 
   @Override public String unterminatedStringMessage() { return "Unterminated string."; }
   @Override public String undefinedVariableMessage(String name) { return "Undefined variable '" + name + "'."; }
@@ -79,4 +80,5 @@ public class EnglishSlang extends Slang {
   @Override public String expectSuperclassMethodNameMessage() { return "Expect superclass method name."; }
   @Override public String expectRightParenAfterExpressionMessage() { return "Expect ')' after expression."; }
   @Override public String expectRightBraceAfterBlock() { return "Expect '}' after block."; }
+  @Override public String exitREPLMessage() { return "Exiting REPL. Take care!"; }
 }

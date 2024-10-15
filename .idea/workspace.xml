@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="642ccbb1-f221-4736-b90b-fdda4c0b475a" name="Changes" comment="Add command line switch to change language">
+    <list default="true" id="642ccbb1-f221-4736-b90b-fdda4c0b475a" name="Changes" comment="Add more translations for hindi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/slang/EnglishSlang.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/slang/EnglishSlang.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/slang/HindiSlang.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/slang/HindiSlang.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/slang/Slang.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/slang/Slang.java" afterDir="false" />
@@ -42,6 +43,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Local REPL EN.executor": "Run",
+    "Application.Local REPL HI.executor": "Run",
     "Application.Local REPL.executor": "Run",
     "Application.Local Script EN.executor": "Run",
     "Application.Local Script HI.executor": "Run",
@@ -169,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729015005864</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add more translations for hindi">
+      <option name="closed" value="true" />
+      <created>1729021811744</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1729021811744</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -179,7 +189,8 @@
     <MESSAGE value="Add english localization" />
     <MESSAGE value="Add hindi slang" />
     <MESSAGE value="Add command line switch to change language" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add command line switch to change language" />
+    <MESSAGE value="Add more translations for hindi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add more translations for hindi" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

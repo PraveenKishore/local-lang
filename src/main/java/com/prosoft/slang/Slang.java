@@ -22,6 +22,7 @@ public abstract class Slang {
   public abstract String initKey();
   public abstract String functionKindKey();
   public abstract String methodKindKey();
+  public abstract String exitREPLKey();
 
   // Abstract methods for error messages
   public abstract String unterminatedStringMessage();
@@ -81,5 +82,6 @@ public abstract class Slang {
   public abstract String expectSuperclassMethodNameMessage();
   public abstract String expectRightParenAfterExpressionMessage();
   public abstract String expectRightBraceAfterBlock();
+  public abstract String exitREPLMessage();
 }
 
