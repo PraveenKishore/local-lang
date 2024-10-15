@@ -36,7 +36,6 @@ public abstract class Slang {
   public abstract String canCallOnlyFunOrClassMessage();
   public abstract String arityMismatchMessage(int expected, int received);
   public abstract String onlyInstancesHavePropsMessage();
-  public abstract String usageMessage();
   public abstract String errorInLineMessage(int line, String message);
   public abstract String errorAtEndMessage(int line, String message);
   public abstract String errorAtMessage(int line, String where, String message);

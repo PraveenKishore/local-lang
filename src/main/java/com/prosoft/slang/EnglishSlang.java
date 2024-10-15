@@ -34,7 +34,6 @@ public class EnglishSlang extends Slang {
   @Override public String canCallOnlyFunOrClassMessage() { return "Can only call functions and classes."; }
   @Override public String arityMismatchMessage(int expected, int received) { return "Expected " + expected + " arguments but got " + received + "."; }
   @Override public String onlyInstancesHavePropsMessage() { return "Only instances have properties."; }
-  @Override public String usageMessage() { return "Usage: local [script]"; }
   @Override public String errorInLineMessage(int line, String message) { return "[line " + line + "] Error : " + message; }
   @Override public String errorAtEndMessage(int line, String message) { return "[line " + line + "] Error at end" + ": " + message; }
   @Override public String errorAtMessage(int line, String where, String message) { return "[line " + line + "] Error at '" + where + "'" + ": " + message; }
