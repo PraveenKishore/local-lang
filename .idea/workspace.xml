@@ -5,19 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="642ccbb1-f221-4736-b90b-fdda4c0b475a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/mega.el" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalCallable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Resolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Resolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Scanner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2nR74eouy6slMA97a60YlCDCexZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -26,11 +43,43 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Local REPL.executor": "Run",
+    "Application.Local Script.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "onboarding.tips.debug.path": "/Users/hustle/Downloads/development/java/local-lang/src/main/java/com/prosoft/Main.java"
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "/Users/hustle/Downloads/development/java/local-lang/src/test",
+    "onboarding.tips.debug.path": "/Users/hustle/Downloads/development/java/local-lang/src/main/java/com/prosoft/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Local Script">
+    <configuration name="Local REPL" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.prosoft.Local" />
+      <module name="local-lang" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Local Script" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.prosoft.Local" />
+      <module name="local-lang" />
+      <option name="PROGRAM_PARAMETERS" value="$ContentRoot$/src/test/mega.el" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Local REPL" />
+      <item itemvalue="Application.Local Script" />
+    </list>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
