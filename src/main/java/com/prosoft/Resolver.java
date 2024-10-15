@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import static com.prosoft.Slang.*;
+
 class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   private final Interpreter interpreter;
   private final Stack<Map<String, Boolean>> scopes = new Stack<>();
@@ -71,7 +73,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
     Map<String, Boolean> scope = scopes.peek();
     if (scope.containsKey(name.lexeme)) {
-      Local.error(name, "Already variable with this name in this scope.");
+      Local.error(name, variableRedeclarationMessage());
     }
     scope.put(name.lexeme, false);
   }
@@ -109,7 +111,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     define(stmt.name);
 
     if (stmt.superclass != null && stmt.name.lexeme.equals(stmt.superclass.name.lexeme)) {
-      Local.error(stmt.superclass.name, "A class can't inherit from itself.");
+      Local.error(stmt.superclass.name, classCantInheritItselfMessage());
     }
 
     if (stmt.superclass != null) {
@@ -119,15 +121,15 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     if (stmt.superclass != null) {
       beginScope();
-      scopes.peek().put("super", true);
+      scopes.peek().put(superKey(), true);
     }
 
     beginScope();
-    scopes.peek().put("this", true);
+    scopes.peek().put(thisKey(), true);
 
     for (Stmt.Function method : stmt.methods) {
       FunctionType declaration = FunctionType.METHOD;
-      if (method.name.lexeme.equals("init")) {
+      if (method.name.lexeme.equals(initKey())) {
         declaration = FunctionType.INITIALIZER;
       }
       resolveFunction(method, declaration);
@@ -175,12 +177,12 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitReturnStmt(Stmt.Return stmt) {
     if (currentFunction == FunctionType.NONE) {
-      Local.error(stmt.keyword, "Can't return from top-level code.");
+      Local.error(stmt.keyword, cantReturnFromTopLevelMessage());
     }
 
     if (stmt.value != null) {
       if (currentFunction == FunctionType.INITIALIZER) {
-        Local.error(stmt.keyword, "Can't return a value from an initializer.");
+        Local.error(stmt.keyword, cantReturnFromInitializerMessage());
       }
       resolve(stmt.value);
     }
@@ -206,10 +208,8 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
   @Override
   public Void visitVariableExpr(Expr.Variable expr) {
-    if (!scopes.isEmpty() &&
-        scopes.peek().get(expr.name.lexeme) == Boolean.FALSE) {
-      Local.error(expr.name,
-          "Can't read local variable in its own initializer.");
+    if (!scopes.isEmpty() && scopes.peek().get(expr.name.lexeme) == Boolean.FALSE) {
+      Local.error(expr.name, cantReadLocalFromInitializerMessage());
     }
     resolveLocal(expr, expr.name);
     return null;
@@ -272,9 +272,9 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitSuperExpr(Expr.Super expr) {
     if (currentClass == ClassType.NONE) {
-      Local.error(expr.keyword, "Can't use 'super' outside of a class.");
+      Local.error(expr.keyword, cantUseSuperOutsideClassMessage());
     } else if (currentClass != ClassType.SUBCLASS) {
-      Local.error(expr.keyword, "Can't use 'super' in a class with no superclass.");
+      Local.error(expr.keyword, cantUseSuperWithoutInheritanceMessage());
     }
 
     resolveLocal(expr, expr.keyword);
@@ -284,7 +284,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
   @Override
   public Void visitThisExpr(Expr.This expr) {
     if (currentClass == ClassType.NONE) {
-      Local.error(expr.keyword, "Can't use 'this' outside of a class.");
+      Local.error(expr.keyword, cantUseThisOutsideClassMessage());
       return null;
     }
 

@@ -1,5 +1,6 @@
 package com.prosoft;
 
+import static com.prosoft.Slang.*;
 import static com.prosoft.TokenType.*;
 
 import java.util.ArrayList;
@@ -17,22 +18,22 @@ public class Scanner {
 
   static {
     keywords = new HashMap<>();
-    keywords.put("and", AND);
-    keywords.put("class", CLASS);
-    keywords.put("else", ELSE);
-    keywords.put("false", FALSE);
-    keywords.put("for", FOR);
-    keywords.put("fun", FUN);
-    keywords.put("if", IF);
-    keywords.put("nil", NIL);
-    keywords.put("or", OR);
-    keywords.put("print", PRINT);
-    keywords.put("return", RETURN);
-    keywords.put("super", SUPER);
-    keywords.put("this", THIS);
-    keywords.put("true", TRUE);
-    keywords.put("var", VAR);
-    keywords.put("while", WHILE);
+    keywords.put(andKey(), AND);
+    keywords.put(classKey(), CLASS);
+    keywords.put(elseKey(), ELSE);
+    keywords.put(falseKey(), FALSE);
+    keywords.put(forKey(), FOR);
+    keywords.put(functionKey(), FUN);
+    keywords.put(ifKey(), IF);
+    keywords.put(nilKey(), NIL);
+    keywords.put(orKey(), OR);
+    keywords.put(printKey(), PRINT);
+    keywords.put(returnKey(), RETURN);
+    keywords.put(superKey(), SUPER);
+    keywords.put(thisKey(), THIS);
+    keywords.put(trueKey(), TRUE);
+    keywords.put(varKey(), VAR);
+    keywords.put(whileKey(), WHILE);
   }
 
   Scanner(String source) {
@@ -174,7 +175,7 @@ public class Scanner {
     }
 
     if (isAtEnd()) {
-      Local.error(line, "Unterminated string.");
+      Local.error(line, unterminatedStringMessage());
       return;
     }
 

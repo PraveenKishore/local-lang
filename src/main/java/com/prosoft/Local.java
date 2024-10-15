@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static com.prosoft.Slang.*;
+
 public class Local {
   private static final Interpreter interpreter = new Interpreter();
   static boolean hadError = false;
@@ -15,7 +17,7 @@ public class Local {
 
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
-      System.out.println("Usage: local [script]");
+      System.out.println(usageMessage());
       System.exit(64);
     } else if (args.length == 1) {
       runFile(args[0]);
@@ -76,26 +78,42 @@ public class Local {
     // System.out.println(new AstPrinter().print(expression));
   }
 
+//  static void error(int line, String message) {
+//    report(line, "", message);
+//  }
+//
+//  private static void report(int line, String where, String message) {
+//    System.err.println("[line " + line + "] Error " + where + ": " + message);
+//    hadError = true;
+//  }
+//
+//  static void error(Token token, String message) {
+//    if (token.type == TokenType.EOF) {
+//      report(token.line, " at end", message);
+//    } else {
+//      report(token.line, " at '" + token.lexeme + "'", message);
+//    }
+//  }
+
   static void error(int line, String message) {
-    report(line, "", message);
+    report(errorInLineMessage(line, message));
   }
 
-  private static void report(int line, String where, String message) {
-    System.err.println("[line " + line + "] Error " + where + ": " + message);
+  private static void report(String message) {
+    System.err.println(message);
     hadError = true;
   }
 
   static void error(Token token, String message) {
     if (token.type == TokenType.EOF) {
-      report(token.line, " at end", message);
+      report(errorAtEndMessage(token.line, message));
     } else {
-      report(token.line, " at '" + token.lexeme + "'", message);
+      report(errorAtMessage(token.line, token.lexeme, message));
     }
   }
 
   static void runtimeError(RuntimeError error) {
-    System.err.println(error.getMessage() +
-        "\n[line " + error.token.line + "]");
+    System.err.println(error.getMessage() + "\n" + runtimeErrorMessage(error.token.line));
     hadRuntimeError = true;
   }
 }

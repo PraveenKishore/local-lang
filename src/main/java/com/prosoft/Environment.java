@@ -3,6 +3,8 @@ package com.prosoft;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.prosoft.Slang.undefinedVariableMessage;
+
 public class Environment {
   final Environment enclosing;
   private final Map<String, Object> values = new HashMap<>();
@@ -21,7 +23,7 @@ public class Environment {
     }
     if (enclosing != null)
       return enclosing.get(name);
-    throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
+    throw new RuntimeError(name, undefinedVariableMessage(name.lexeme));
   }
 
   void define(String name, Object value) {
@@ -53,6 +55,6 @@ public class Environment {
       enclosing.assign(name, value);
       return;
     }
-    throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
+    throw new RuntimeError(name, undefinedVariableMessage(name.lexeme));
   }
 }

@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="642ccbb1-f221-4736-b90b-fdda4c0b475a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/mega.el" afterDir="false" />
+    <list default="true" id="642ccbb1-f221-4736-b90b-fdda4c0b475a" name="Changes" comment="Add idea files">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Slang.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Environment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalCallable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LoxInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Local.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/LocalInstance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Resolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Resolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/prosoft/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/prosoft/Scanner.java" afterDir="false" />
     </list>
@@ -89,7 +88,29 @@
       <option name="presentableId" value="Default" />
       <updated>1728923844545</updated>
     </task>
+    <task id="LOCAL-00001" summary="Local typo">
+      <option name="closed" value="true" />
+      <created>1728996851055</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728996851055</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add idea files">
+      <option name="closed" value="true" />
+      <created>1728996870830</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728996870830</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Local typo" />
+    <MESSAGE value="Add idea files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add idea files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

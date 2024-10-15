@@ -3,6 +3,8 @@ package com.prosoft;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.prosoft.Slang.*;
+
 class LocalInstance {
   private LocalClass klass;
   private final Map<String, Object> fields = new HashMap<>();
@@ -21,7 +23,7 @@ class LocalInstance {
       return method.bind(this);
     }
 
-    throw new RuntimeError(name, "Undefined property '" + name.lexeme + "'.");
+    throw new RuntimeError(name, undefinedPropertyMessage(name.lexeme));
   }
 
   void set(Token name, Object value) {
@@ -30,6 +32,6 @@ class LocalInstance {
 
   @Override
   public String toString() {
-    return klass.name + " instance";
+    return instanceStringMessage(klass.name);
   }
 }

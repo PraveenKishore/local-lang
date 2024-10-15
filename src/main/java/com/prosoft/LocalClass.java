@@ -3,6 +3,8 @@ package com.prosoft;
 import java.util.List;
 import java.util.Map;
 
+import static com.prosoft.Slang.*;
+
 class LocalClass implements LocalCallable {
   final String name;
   final LocalClass superclass;
@@ -27,7 +29,7 @@ class LocalClass implements LocalCallable {
   @Override
   public Object call(Interpreter interpreter, List<Object> arguments) {
     LocalInstance instance = new LocalInstance(this);
-    LocalFunction initializer = findMethod("init");
+    LocalFunction initializer = findMethod(initKey());
     if (initializer != null) {
       initializer.bind(instance).call(interpreter, arguments);
     }
@@ -36,7 +38,7 @@ class LocalClass implements LocalCallable {
 
   @Override
   public int arity() {
-    LocalFunction initializer = findMethod("init");
+    LocalFunction initializer = findMethod(initKey());
     if (initializer == null) {
       return 0;
     }

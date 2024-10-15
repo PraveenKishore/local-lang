@@ -15,6 +15,8 @@ import com.prosoft.Stmt.Expression;
 import com.prosoft.Stmt.Print;
 import com.prosoft.Stmt.Var;
 
+import static com.prosoft.Slang.*;
+
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   final Environment globals = new Environment();
@@ -22,21 +24,20 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   private final Map<Expr, Integer> locals = new HashMap<>();
 
   Interpreter() {
-    globals.define("clock", new LocalCallable() {
+    globals.define(clockKey(), new LocalCallable() {
       @Override
       public int arity() {
         return 0;
       }
 
       @Override
-      public Object call(Interpreter interpreter,
-          List<Object> arguments) {
+      public Object call(Interpreter interpreter, List<Object> arguments) {
         return (double) System.currentTimeMillis() / 1000.0;
       }
 
       @Override
       public String toString() {
-        return "<native fn>";
+        return nativeFnMessage();
       }
     });
   }
@@ -82,7 +83,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (left instanceof String && right instanceof String) {
           return (String) left + (String) right;
         }
-        throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
+        throw new RuntimeError(expr.operator, mustBeNumOrStrMessage());
       case SLASH:
         checkNumberOperands(expr.operator, left, right);
         return (double) left / (double) right;
@@ -125,14 +126,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
       return;
     }
 
-    throw new RuntimeError(operator, "Operand must be a number.");
+    throw new RuntimeError(operator, mustBeANumberMessage());
   }
 
   private void checkNumberOperands(Token operator, Object left, Object right) {
     if (left instanceof Double && right instanceof Double) {
       return;
     }
-    throw new RuntimeError(operator, "Operands must be numbers.");
+    throw new RuntimeError(operator, mustBeNumbersMessage());
   }
 
   private Object evaluate(Expr expr) {
@@ -181,7 +182,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
   private String stringify(Object object) {
     if (object == null) {
-      return "nil";
+      return nilKey();
     }
     if (object instanceof Double) {
       String text = object.toString();
@@ -256,19 +257,19 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     if (stmt.superclass != null) {
       superclass = evaluate(stmt.superclass);
       if (!(superclass instanceof LocalClass)) {
-        throw new RuntimeError(stmt.superclass.name, "Superclass must be a class.");
+        throw new RuntimeError(stmt.superclass.name, superMustBeClassMessage());
       }
     }
     environment.define(stmt.name.lexeme, null);
 
     if (stmt.superclass != null) {
       environment = new Environment(environment);
-      environment.define("super", superclass);
+      environment.define(superKey(), superclass);
     }
 
     Map<String, LocalFunction> methods = new HashMap<>();
     for (Stmt.Function method : stmt.methods) {
-      LocalFunction function = new LocalFunction(method, environment, method.name.lexeme.equals("init"));
+      LocalFunction function = new LocalFunction(method, environment, method.name.lexeme.equals(initKey()));
       methods.put(method.name.lexeme, function);
     }
     LocalClass klass = new LocalClass(stmt.name.lexeme, (LocalClass) superclass, methods);
@@ -308,7 +309,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   public Object visitSetExpr(Expr.Set expr) {
     Object object = evaluate(expr.object);
     if (!(object instanceof LocalInstance)) {
-      throw new RuntimeError(expr.name, "Only instances have fields.");
+      throw new RuntimeError(expr.name, onlyInstancesHaveFieldsMessage());
     }
     Object value = evaluate(expr.value);
     ((LocalInstance) object).set(expr.name, value);
@@ -318,13 +319,13 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   @Override
   public Object visitSuperExpr(Expr.Super expr) {
     int distance = locals.get(expr);
-    LocalClass superclass = (LocalClass) environment.getAt(distance, "super");
+    LocalClass superclass = (LocalClass) environment.getAt(distance, superKey());
 
-    LocalInstance object = (LocalInstance) environment.getAt(distance - 1, "this");
+    LocalInstance object = (LocalInstance) environment.getAt(distance - 1, thisKey());
     LocalFunction method = superclass.findMethod(expr.method.lexeme);
 
     if (method == null) {
-      throw new RuntimeError(expr.method, "Undefined property '" + expr.method.lexeme + "'.");
+      throw new RuntimeError(expr.method, undefinedPropertyMessage(expr.method.lexeme));
     }
 
     return method.bind(object);
@@ -351,14 +352,11 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
       arguments.add(evaluate(argument));
     }
     if (!(callee instanceof LocalCallable)) {
-      throw new RuntimeError(expr.paren,
-          "Can only call functions and classes.");
+      throw new RuntimeError(expr.paren, canCallOnlyFunOrClassMessage());
     }
     LocalCallable function = (LocalCallable) callee;
     if (arguments.size() != function.arity()) {
-      throw new RuntimeError(expr.paren, "Expected " +
-          function.arity() + " arguments but got " +
-          arguments.size() + ".");
+      throw new RuntimeError(expr.paren, arityMismatchMessage(function.arity(), arguments.size()));
     }
     return function.call(this, arguments);
   }
@@ -369,8 +367,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     if (object instanceof LocalInstance) {
       return ((LocalInstance) object).get(expr.name);
     }
-    throw new RuntimeError(expr.name,
-        "Only instances have properties.");
+    throw new RuntimeError(expr.name, onlyInstancesHavePropsMessage());
   }
 
   @Override

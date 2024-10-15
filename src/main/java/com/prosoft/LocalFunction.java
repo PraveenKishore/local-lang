@@ -2,6 +2,8 @@ package com.prosoft;
 
 import java.util.List;
 
+import static com.prosoft.Slang.*;
+
 class LocalFunction implements LocalCallable {
   private final Stmt.Function declaration;
   private final Environment closure;
@@ -15,7 +17,7 @@ class LocalFunction implements LocalCallable {
 
   LocalFunction bind(LocalInstance instance) {
     Environment environment = new Environment(closure);
-    environment.define("this", instance);
+    environment.define(thisKey(), instance);
     return new LocalFunction(declaration, environment, isInitializer);
   }
 
@@ -36,13 +38,13 @@ class LocalFunction implements LocalCallable {
       return returnValue.value;
     }
     if (isInitializer) {
-      return closure.getAt(0, "this");
+      return closure.getAt(0, thisKey());
     }
     return null;
   }
 
   @Override
   public String toString() {
-    return "<fn " + declaration.name.lexeme + ">";
+    return functionStringMessage(declaration.name.lexeme);
   }
 }
