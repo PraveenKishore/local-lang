@@ -23,3 +23,4 @@ mvn package
 
 ### Documentation
 * For Hindi documentation - [Click here](/docs-hi.md)
+* For Kannada documentation - [Click here](/docs-ka.md)
