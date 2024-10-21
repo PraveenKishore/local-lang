@@ -1,4 +1,4 @@
-## local-lang Documenation (hindi slangs)
+## local-lang Documentation (Hindi slang)
 
 ### Variables
 Declare variables using `maanle`. Variables can be strings, numbers, boolean or nil. Nil values are represented by `ghanta`.
