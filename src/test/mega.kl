@@ -1,0 +1,56 @@
+// Variables and printing
+anko hesru = "Local (Kannada)";
+helu hesru;  // Output: Local (Kannada)
+
+// Functions
+kelsa greetMadu() {
+    helu "Namskara boss!";
+}
+greetMadu();  // Output: Namskara boss!
+
+anko a = 5;
+anko b = 3;
+// Control flow
+akasmat (a > b) {
+    helu "'a' doddadu guru!";
+} illandre {
+    helu "'b' doddadu guru!";
+}
+
+// Classes and inheritance
+varga Praani {
+    kuugu() {
+        helu "Vichitra sound galu";
+    }
+}
+
+varga Naayimari < Praani {
+    kuugu() {
+        helu "Bow bow!";
+    }
+}
+
+anko namPrani = Praani();
+namPrani.kuugu(); // Output: Vichitra sound galu
+
+anko namNaayiMari = Naayimari();
+namNaayiMari.kuugu();  // Output: Bow bow!
+
+// While loop example
+anko i = 0;
+ellivargu (i < 5) {
+    helu i;  // Output: 0, 1, 2, 3, 4
+    i = i + 1;
+}
+
+// For loop example
+maadtiru (anko j = 0; j < 5; j = j + 1) {
+    helu j;  // Output: 0, 1, 2, 3, 4
+}
+
+// For loop without initialization and increment (like a C-style while loop)
+anko k = 0;
+maadtiru (; k < 5;) {
+    helu k;  // Output: 0, 1, 2, 3, 4
+    k = k + 1;
+}
