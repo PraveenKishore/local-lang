@@ -58,8 +58,11 @@ Define for and while loops with `karteraho` and `jabtak`.
 ```
 maanle hai_jaan = 2;
 jabtak (hai_jaan > 0) {
-  bolo hai_jaan;
   hai_jaan = hai_jaan - 1;
+
+  agar (hai_jaan == 0) {
+    bolo "Joh dil jeette hai woh kabhi haarte nahi";
+  }
 }
 
 karteraho (maanle j = 0; j < 5; j = j + 1) {

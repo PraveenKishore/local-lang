@@ -54,7 +54,7 @@ akasmat (varsha == "2024") {
 ```
 
 ### Loops
-Define for and while loops with `karteraho` and `jabtak`.
+Define for and while loops with `ellivargu` and `maadtiru`.
 
 ```
 anko lifeu = "istene";
