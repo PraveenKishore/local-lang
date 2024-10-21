@@ -20,3 +20,6 @@ mvn package
 ### To execute interpreter
 * To execute in REPL mode - Run the Local class without any arguments. Or run `java -jar local-lang.jar`
 * To execute scripts - Run Local class with the path to script as argument. Or run `java -jar local-lang.jar <path to script>`
+
+### Documentation
+* For Hindi documentation - [Click here](/docs-hi.md)
