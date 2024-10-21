@@ -29,3 +29,10 @@ jobs:
         with:
           name: local-lang-${{ matrix.os }}
           path: local-lang*
+      
+      - name: Upload jar
+        if: matrix.os == 'macos-latest'  # Upload jar only once, since all platforms produce same jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-lang.jar
+          path: target/local-lang.jar
