@@ -2,6 +2,7 @@ package com.prosoft;
 
 import com.prosoft.slang.EnglishSlang;
 import com.prosoft.slang.HindiSlang;
+import com.prosoft.slang.KannadaSlang;
 import com.prosoft.slang.Slang;
 
 import java.io.BufferedReader;
@@ -20,7 +21,7 @@ public class Local {
 
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
-      System.out.println("Usage: local [-hi/-en] <file path>");
+      System.out.println("Usage: local [-hi/-ka] <file path>");
       System.exit(64);
     }
 
@@ -29,28 +30,28 @@ public class Local {
 
     if (args.length == 1) {
       String arg = args[0].toLowerCase();
-      if (arg.equals("-hi")) {
-        slang = new HindiSlang();
-      } else if (arg.equals("-en")) {
-        slang = new EnglishSlang();
-      } else {
-        // Check if it's a file
-        File file = new File(arg);
-        if (!file.isFile() || !file.exists()) {
-          System.out.println("Invalid switch or file path");
-          System.exit(64);
-        }
+      switch (arg) {
+        case "-hi" -> slang = new HindiSlang();
+        case "-ka" -> slang = new KannadaSlang();
+        default -> {
+          // Check if it's a file
+          File file = new File(arg);
+          if (!file.isFile() || !file.exists()) {
+            System.out.println("Invalid slang or file path");
+            System.exit(64);
+          }
 
-        String fileName = file.getName();
-        if (fileName.endsWith(".hl")) {
-          slang = new HindiSlang();
-        } else if (fileName.endsWith(".el")) {
-          slang = new EnglishSlang();
-        } else {
-          System.out.println("Invalid file extension");
-          System.exit(64);
+          String fileName = file.getName();
+          if (fileName.endsWith(".hl")) {
+            slang = new HindiSlang();
+          } else if (fileName.endsWith(".kl")) {
+            slang = new KannadaSlang();
+          } else {
+            System.out.println("Invalid file extension");
+            System.exit(64);
+          }
+          runPrompt = false; // Do not run prompt if file is provided
         }
-        runPrompt = false; // Do not run prompt if file is provided
       }
     } else {
       slang = new HindiSlang(); // Default to Hindi slang
@@ -58,7 +59,13 @@ public class Local {
 
     interpreter = new Interpreter(slang);
     if (runPrompt) {
-      System.out.println("Welcome: local-lang running REPL in " + (slang instanceof HindiSlang ? "Hindi" : "English") + " slang");
+      String lang;
+      if(slang instanceof KannadaSlang) {
+        lang = "Kannada";
+      } else {
+        lang = "Hindi";
+      }
+      System.out.println("Welcome: local-lang running REPL in " + lang + " slang");
       runPrompt();
     } else {
       runFile(args[0]);
