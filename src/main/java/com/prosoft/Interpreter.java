@@ -188,6 +188,9 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     if (object == null) {
       return slang.nilKey();
     }
+    if (object instanceof Boolean) {
+      return ((boolean) object) ? slang.trueKey() : slang.falseKey();
+    }
     if (object instanceof Double) {
       String text = object.toString();
       if (text.endsWith(".0")) {
