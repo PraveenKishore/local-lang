@@ -1,6 +1,6 @@
 ## local-lang Documenation (hindi slangs)
 
-#### Variables
+### Variables
 Declare variables using `maanle`. Variables can be strings, numbers, boolean or nil. Nil values are represented by `ghanta`.
 
 ```
@@ -14,7 +14,7 @@ maanle b = 10.5;
 maanle c = (a + b) * a / (1 * pal);
 ```
 
-#### Built-ins
+### Built-ins
 Use `bolo` to print anything to console. Strings can be concatenated with `+` and if arithmetic is present while printing, they will be evaluated first.
 
 ```
@@ -28,7 +28,7 @@ bolo 400 + 20;
 bolo "dil" + "dosti" + "dhadkan";
 ```
 
-#### Functions
+### Functions
 Define and call functions with `fun`. These are very similar to functions in C or java.
 
 ```
@@ -40,7 +40,7 @@ maanle bacha = hera_pheri_logic(420, 20);
 bolo bacha;
 ```
 
-#### Conditionals
+### Conditionals
 You can define if-else using the `agar` and `varna` keywords.
 
 ```
@@ -52,7 +52,7 @@ agar (party) {
 }
 ```
 
-#### Loops
+### Loops
 Define for and while loops with `karteraho` and `jabtak`.
 
 ```
@@ -67,7 +67,7 @@ karteraho (maanle j = 0; j < 5; j = j + 1) {
 }
 ```
 
-#### Classes & Inheritance
+### Classes & Inheritance
 Define classes with `varg` and create objects calling the class. Extend the classes with `<`.
 
 ```
