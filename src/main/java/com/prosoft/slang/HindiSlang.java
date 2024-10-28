@@ -27,17 +27,17 @@ public class HindiSlang extends Slang {
   @Override public String undefinedVariableMessage(String name) { return "Variable define nahi kiya hai - '" + name + "'."; }
   @Override public String undefinedPropertyMessage(String property) { return "Property define nahi kiya hai - '" + property + "'."; }
   @Override public String nativeFnMessage() { return "<Builtin fn hai>"; }
-  @Override public String mustBeNumOrStrMessage() { return "Dono operands strings ya numbers honi chahiye"; }
-  @Override public String mustBeANumberMessage() { return "Number honi chahiye"; }
-  @Override public String mustBeNumbersMessage() { return "Numbers honi chahiye bhai"; }
+  @Override public String mustBeNumOrStrMessage() { return "Dono operands strings ya numbers hone chahiye"; }
+  @Override public String mustBeANumberMessage() { return "Number hona chahiye"; }
+  @Override public String mustBeNumbersMessage() { return "Numbers hone chahiye bhai"; }
   @Override public String superMustBeClassMessage() { return "Superclass jo use kiya hai, woh class hi nhi hai"; }
   @Override public String onlyInstancesHaveFieldsMessage() { return "Sirf instances mein fields ho sakta hai"; }
   @Override public String canCallOnlyFunOrClassMessage() { return "Sirf functions aur classes ko call kar sakte ho"; }
-  @Override public String arityMismatchMessage(int expected, int received) { return "Expect kiya " + expected + " arguments but mila " + received + "."; }
+  @Override public String arityMismatchMessage(int expected, int received) { return "Expect kiya tha " + expected + " par arguments mila " + received + "."; }
   @Override public String onlyInstancesHavePropsMessage() { return "Only instances have properties."; }
-  @Override public String errorInLineMessage(int line, String message) { return "[line " + line + "] Error : " + message; }
-  @Override public String errorAtEndMessage(int line, String message) { return "[line " + line + "] Error at end" + ": " + message; }
-  @Override public String errorAtMessage(int line, String where, String message) { return "[line " + line + "] Error at '" + where + "'" + ": " + message; }
+  @Override public String errorInLineMessage(int line, String message) { return "[line " + line + "] Galti : " + message; }
+  @Override public String errorAtEndMessage(int line, String message) { return "[line " + line + "] Galti at end" + ": " + message; }
+  @Override public String errorAtMessage(int line, String where, String message) { return "[line " + line + "] Galti at '" + where + "'" + ": " + message; }
   @Override public String runtimeErrorMessage(int line) { return "[line " + line + "]";}
   @Override public String functionStringMessage(String name) { return "<fn " + name + ">"; }
   @Override public String instanceStringMessage(String name) { return name + " instance"; }
@@ -49,36 +49,36 @@ public class HindiSlang extends Slang {
   @Override public String cantUseSuperOutsideClassMessage() { return "'uper' ko class ke bahar use nahi kar sakte ho"; }
   @Override public String cantUseSuperWithoutInheritanceMessage() { return "Iss class ki superclass nahi hai, so 'uper' use nahi kar sakte ho"; }
   @Override public String cantUseThisOutsideClassMessage() { return "'khud' ko sirf class ke andar use kar sakte ho"; }
-  @Override public String expectClassNameMessage() { return "Class ka naam expected hai"; }
-  @Override public String expectSuperClassNameMessage() { return "Superclass ka naam expected hai"; }
+  @Override public String expectClassNameMessage() { return "Class ka naam kidhar hai?"; }
+  @Override public String expectSuperClassNameMessage() { return "Superclass ka naam kidhar hai?"; }
   @Override public String expectLeftBraceBeforeClassBodyMessage() { return "Expecting '{' class body se pehle."; }
   @Override public String expectRightBraceAfterClassBodyMessage() { return "Expecting '}' class body ke baad."; }
-  @Override public String expectLeftParenAfterForMessage() { return "'for' ke baad ')' honi chahiye."; }
-  @Override public String expectSemicolonAfterLoopConditionMessage() { return "Loop condition ke baad ';' honi chahiye"; }
+  @Override public String expectLeftParenAfterForMessage() { return "'for' ke baad ')' hona chahiye."; }
+  @Override public String expectSemicolonAfterLoopConditionMessage() { return "Loop condition ke baad ';' hona chahiye"; }
   @Override public String expectRightParenAfterForClausesMessage() { return "Clauses ke baad ')' honi chahiye"; }
-  @Override public String expectLeftParenAfterIfMessage() { return "'if' ke baad '(' honi chahiye"; }
-  @Override public String expectRightParenAfterIfConditionMessage() { return "'if' condition ke baad ')' honi chahiye"; }
-  @Override public String expectSemicolonAfterValueMessage() { return "Value ke baad ';' honi chahiye"; }
-  @Override public String expectSemicolonAfterReturnValueMessage() { return "Return ke baad ';' honi chahiye."; }
-  @Override public String expectVariableNameMessage() { return "Variable naam chahiye."; }
-  @Override public String expectSemicolonAfterVariableDeclarationMessage() { return "Variable declaration ke baad ';' honi chahiye."; }
-  @Override public String expectLeftParenAfterWhileMessage() { return "'while' ke baad '(' honi chahiye bhai."; }
-  @Override public String expectRightParenAfterConditionMessage() { return "Condition ke baad ')' honi chahiye"; }
-  @Override public String expectSemicolonAfterExpressionMessage() { return "Expression ke baad ';' honi chahiye."; }
+  @Override public String expectLeftParenAfterIfMessage() { return "'if' ke baad '(' hona chahiye"; }
+  @Override public String expectRightParenAfterIfConditionMessage() { return "'if' condition ke baad ')' hona chahiye"; }
+  @Override public String expectSemicolonAfterValueMessage() { return "Value ke baad ';' hona chahiye"; }
+  @Override public String expectSemicolonAfterReturnValueMessage() { return "Return ke baad ';' hona chahiye."; }
+  @Override public String expectVariableNameMessage() { return "Variable naam kidhar hai?."; }
+  @Override public String expectSemicolonAfterVariableDeclarationMessage() { return "Variable ke baad ';' hona chahiye."; }
+  @Override public String expectLeftParenAfterWhileMessage() { return "'while' ke baad '(' hona chahiye bhai."; }
+  @Override public String expectRightParenAfterConditionMessage() { return "Condition ke baad ')' hona chahiye"; }
+  @Override public String expectSemicolonAfterExpressionMessage() { return "Expression ke baad ';' hona chahiye."; }
   @Override public String expectRightParenAfterArgumentsMessage() { return "Arguments ke baad ')' honi chahiye."; }
-  @Override public String expectPropertyNameAfterDotMessage() { return "'.' ke baad property ka naam honi chahiye."; }
-  @Override public String expectExpressionMessage() { return "Expression kaha hai?"; }
+  @Override public String expectPropertyNameAfterDotMessage() { return "'.' ke baad property ka naam hona chahiye."; }
+  @Override public String expectExpressionMessage() { return "Expression kidhar hai?"; }
   @Override public String cantHaveMoreThan255ParametersMessage() { return "255 se jyada parameters nahi ho sakta hai"; }
   @Override public String cantHaveMoreThan255ArgumentsMessage() { return "255 se jyada arguments nahi ho sakta hai"; }
-  @Override public String invalidAssignmentTargetMessage() { return "assignment invalid hai"; }
-  @Override public String expectParamNameMessage() { return "Parameter naam expected hai"; }
-  @Override public String expectFunctionNameMessage(String kind) { return kind + " naam expected hai."; }
-  @Override public String expectLeftParenAfterFunctionNameMessage(String kind) { return kind + " ke baad " + "'(' honi chahiye"; }
+  @Override public String invalidAssignmentTargetMessage() { return "assignment galat hai"; }
+  @Override public String expectParamNameMessage() { return "Parameter naam kidhar hai?"; }
+  @Override public String expectFunctionNameMessage(String kind) { return kind + " naam kidhar hai?"; }
+  @Override public String expectLeftParenAfterFunctionNameMessage(String kind) { return kind + " ke baad " + "'(' hona chahiye"; }
   @Override public String expectRightParenAfterParametersMessage() { return "Parameters ke baad ')' honi chahiye."; }
-  @Override public String expectLeftBraceBeforeFunctionBodyMessage(String kind) { return kind + " body se pehle '{' honi chahiye."; }
-  @Override public String expectSuperDotMessage() { return "'uperwale' ke baad '.' honi chahiye."; }
-  @Override public String expectSuperclassMethodNameMessage() { return "Superclass ki method ka naam chahiye."; }
-  @Override public String expectRightParenAfterExpressionMessage() { return "Expression ke baad ')' honi chahiye."; }
-  @Override public String expectRightBraceAfterBlock() { return "Block ke baad '}' honi chahiye."; }
-  @Override public String exitREPLMessage() { return "Kush raho bhai. Exiting REPL now."; }
+  @Override public String expectLeftBraceBeforeFunctionBodyMessage(String kind) { return kind + " body se pehle '{' hona chahiye."; }
+  @Override public String expectSuperDotMessage() { return "'uperwale' ke baad '.' hona chahiye."; }
+  @Override public String expectSuperclassMethodNameMessage() { return "Superclass method ka naam kidhar hai?"; }
+  @Override public String expectRightParenAfterExpressionMessage() { return "Expression ke baad ')' hona chahiye."; }
+  @Override public String expectRightBraceAfterBlock() { return "Block ke baad '}' hona chahiye."; }
+  @Override public String exitREPLMessage() { return "Kush raho bhai. Phir laut aana, jaaneman."; }
 }
