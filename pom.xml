@@ -6,7 +6,7 @@
 
     <groupId>com.prosoft</groupId>
     <artifactId>local-lang</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>v0.1.2</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -30,9 +30,9 @@
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
-                                    <mainClass>
-                                        com.prosoft.Local
-                                    </mainClass>
+                                    <mainClass>com.prosoft.Local</mainClass>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
