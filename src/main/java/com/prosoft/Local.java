@@ -1,6 +1,5 @@
 package com.prosoft;
 
-import com.prosoft.slang.EnglishSlang;
 import com.prosoft.slang.HindiSlang;
 import com.prosoft.slang.KannadaSlang;
 import com.prosoft.slang.Slang;
@@ -31,6 +30,7 @@ public class Local {
     if (args.length == 1) {
       String arg = args[0].toLowerCase();
       switch (arg) {
+        case "-v" -> printVersionAndExit();
         case "-hi" -> slang = new HindiSlang();
         case "-ka" -> slang = new KannadaSlang();
         default -> {
@@ -65,7 +65,7 @@ public class Local {
       } else {
         lang = "Hindi";
       }
-      System.out.println("Welcome: local-lang running REPL in " + lang + " slang");
+      System.out.println("Welcome: local-lang running REPL in " + lang + " slang (" + getVersion() + ")");
       runPrompt();
     } else {
       runFile(args[0]);
@@ -120,30 +120,8 @@ public class Local {
       return;
     }
 
-    /*for(Stmt stmt: statements) {
-      System.out.println(new AstPrinter().print(stmt));
-    }*/
-
     interpreter.interpret(statements);
-    // System.out.println(new AstPrinter().print(expression));
   }
-
-//  static void error(int line, String message) {
-//    report(line, "", message);
-//  }
-//
-//  private static void report(int line, String where, String message) {
-//    System.err.println("[line " + line + "] Error " + where + ": " + message);
-//    hadError = true;
-//  }
-//
-//  static void error(Token token, String message) {
-//    if (token.type == TokenType.EOF) {
-//      report(token.line, " at end", message);
-//    } else {
-//      report(token.line, " at '" + token.lexeme + "'", message);
-//    }
-//  }
 
   static void error(int line, String message) {
     report(interpreter.slang.errorInLineMessage(line, message));
@@ -165,5 +143,18 @@ public class Local {
   static void runtimeError(RuntimeError error) {
     System.err.println(error.getMessage() + "\n" + interpreter.slang.runtimeErrorMessage(error.token.line));
     hadRuntimeError = true;
+  }
+
+  static void printVersionAndExit() {
+    System.out.println("local-lang " + getVersion());
+    System.exit(0);
+  }
+
+  static String getVersion() {
+    String version = Local.class.getPackage().getImplementationVersion();
+    if (version == null) {
+      version = "v1.0.0";
+    }
+    return version;
   }
 }
