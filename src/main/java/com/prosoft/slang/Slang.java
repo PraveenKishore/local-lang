@@ -1,5 +1,7 @@
 package com.prosoft.slang;
 
+import java.util.List;
+
 public abstract class Slang {
   // Abstract methods for keys
   public abstract String andKey();
@@ -23,6 +25,8 @@ public abstract class Slang {
   public abstract String functionKindKey();
   public abstract String methodKindKey();
   public abstract String exitREPLKey();
+
+  public abstract List<String> getKeywords();
 
   // Abstract methods for error messages
   public abstract String unterminatedStringMessage();
