@@ -3,6 +3,11 @@ package com.prosoft;
 import com.prosoft.slang.HindiSlang;
 import com.prosoft.slang.KannadaSlang;
 import com.prosoft.slang.Slang;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.impl.completer.StringsCompleter;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -66,7 +71,7 @@ public class Local {
         lang = "Hindi";
       }
       System.out.println("Welcome: local-lang running REPL in " + lang + " slang (" + getVersion() + ")");
-      runPrompt();
+      runREPL();
     } else {
       runFile(args[0]);
     }
@@ -83,7 +88,33 @@ public class Local {
     }
   }
 
-  private static void runPrompt() throws IOException {
+  private static void runREPL() {
+    try {
+      Terminal terminal = TerminalBuilder.terminal();
+      LineReader reader = LineReaderBuilder.builder()
+              .terminal(terminal)
+              .completer(new StringsCompleter(interpreter.slang.getKeywords()))
+              .build();
+      while (true) {
+        String line = reader.readLine("> ");
+        if (line == null) {
+          break;
+        }
+        if (line.trim().equalsIgnoreCase(interpreter.slang.exitREPLKey())) {
+          System.out.println(interpreter.slang.exitREPLMessage());
+          System.exit(0);
+        }
+        reader.getHistory().add(line);
+        run(line);
+        hadError = false;
+      }
+    } catch (Exception e) {
+      System.out.println(interpreter.slang.exitREPLMessage());
+      System.exit(0);
+    }
+  }
+
+  private static void runLegacyPrompt() throws IOException {
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
 

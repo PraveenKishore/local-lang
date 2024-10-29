@@ -1,5 +1,8 @@
 package com.prosoft.slang;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class HindiSlang extends Slang {
   @Override public String andKey() { return "aur"; }
   @Override public String classKey() { return "varg"; }
@@ -22,6 +25,14 @@ public class HindiSlang extends Slang {
   @Override public String functionKindKey() { return "function"; }
   @Override public String methodKindKey() { return "method"; }
   @Override public String exitREPLKey() { return "bye"; }
+
+  @Override public List<String> getKeywords() {
+    return Arrays.asList(
+            andKey(), classKey(), elseKey(), falseKey(), forKey(), functionKey(),
+            ifKey(), nilKey(), orKey(), printKey(), returnKey(), superKey(), thisKey(),
+            trueKey(), varKey(), whileKey(), clockKey(), initKey(), exitREPLKey()
+    );
+  }
 
   @Override public String unterminatedStringMessage() { return "String terminate nahi kiya hai"; }
   @Override public String undefinedVariableMessage(String name) { return "Variable define nahi kiya hai - '" + name + "'."; }

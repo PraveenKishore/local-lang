@@ -1,5 +1,8 @@
 package com.prosoft.slang;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class EnglishSlang extends Slang {
   @Override public String andKey() { return "and"; }
   @Override public String classKey() { return "class"; }
@@ -22,6 +25,14 @@ public class EnglishSlang extends Slang {
   @Override public String functionKindKey() { return "function"; }
   @Override public String methodKindKey() { return "method"; }
   @Override public String exitREPLKey() { return "bye"; }
+
+  @Override public List<String> getKeywords() {
+    return Arrays.asList(
+            andKey(), classKey(), elseKey(), falseKey(), forKey(), functionKey(),
+            ifKey(), nilKey(), orKey(), printKey(), returnKey(), superKey(), thisKey(),
+            trueKey(), varKey(), whileKey(), clockKey(), initKey(), exitREPLKey()
+    );
+  }
 
   @Override public String unterminatedStringMessage() { return "Unterminated string."; }
   @Override public String undefinedVariableMessage(String name) { return "Undefined variable '" + name + "'."; }
