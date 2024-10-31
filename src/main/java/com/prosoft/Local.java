@@ -17,6 +17,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Stack;
 
 public class Local {
   private static Interpreter interpreter;
@@ -95,18 +96,49 @@ public class Local {
               .terminal(terminal)
               .completer(new StringsCompleter(interpreter.slang.getKeywords()))
               .build();
+
+      Stack<Character> braceStack = new Stack<>();
+      StringBuilder inputBuffer = new StringBuilder();
+
       while (true) {
-        String line = reader.readLine("> ");
+        String line = reader.readLine(braceStack.isEmpty() ? ">>> " : "... ");
         if (line == null) {
           break;
         }
-        if (line.trim().equalsIgnoreCase(interpreter.slang.exitREPLKey())) {
-          System.out.println(interpreter.slang.exitREPLMessage());
-          System.exit(0);
+        inputBuffer.append(line).append("\n"); // Store line for later interpretation
+
+        for (char ch : line.toCharArray()) {
+          if (ch == '(' || ch == '{') {
+            braceStack.push(ch);
+          } else if (ch == ')' || ch == '}') {
+            if (braceStack.isEmpty() || !isMatchingBrace(braceStack.peek(), ch)) {
+              System.err.println("Unmatched closing brace: " + ch);
+
+              // Reset all inputs on error
+              inputBuffer.setLength(0);
+              braceStack.clear();
+
+              break;
+            }
+            braceStack.pop();
+          }
         }
-        reader.getHistory().add(line);
-        run(line);
-        hadError = false;
+
+        String inp = inputBuffer.toString().trim();
+        if (braceStack.isEmpty() && !inp.isEmpty()) {
+          // System.out.println("Running line: " + inp.replaceAll("\n", ""));
+
+          if (inp.trim().equalsIgnoreCase(interpreter.slang.exitREPLKey())) {
+            System.out.println(interpreter.slang.exitREPLMessage());
+            System.exit(0);
+          }
+
+          run(inp);
+          hadError = false;
+          reader.getHistory().add(inp);
+          inputBuffer.setLength(0);
+        }
+
       }
     } catch (Exception e) {
       System.out.println(interpreter.slang.exitREPLMessage());
@@ -152,6 +184,10 @@ public class Local {
     }
 
     interpreter.interpret(statements);
+  }
+
+  private static boolean isMatchingBrace(char open, char close) {
+    return (open == '(' && close == ')') || (open == '{' && close == '}');
   }
 
   static void error(int line, String message) {
